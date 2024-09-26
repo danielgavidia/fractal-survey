@@ -6,3 +6,30 @@ datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
 }
+
+model Survey {
+    // defaults
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // fields
+
+    // relationships
+    surveyBlocks SurveyBlock[]
+}
+
+model SurveyBlock {
+    // defaults
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // fields
+    question String @default("Q")
+    answer   String @default("A")
+
+    // relationships
+    Survey   Survey? @relation(fields: [surveyId], references: [id])
+    surveyId String?
+}
