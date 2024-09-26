@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SurveyBlock from "./SurveyBlock";
 
 const data = [
     { question: "What is your first name?", answer: "Default" },
@@ -6,43 +7,40 @@ const data = [
     { question: "How is your day today?", answer: "Default" },
 ];
 
-interface SurveyBlock {
-    block: { question: string; answer: string };
-}
+const Survey = () => {
+    // state
+    const [surveyData, setSurveyData] = useState(data);
+    const [newQuestion, setNewQuestion] = useState<string>("");
 
-const SurveyBlock: React.FC<SurveyBlock> = ({ block }) => {
-    const [answer, setAnswer] = useState(block.answer);
-    const [surveyBlock, setSurveyBlock] = useState(block);
-    console.log(surveyBlock);
-
-    const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // add survey block
+    const handleAddSurveyBlock = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const surveyBlockNew = { ...surveyBlock, answer: answer };
-        setSurveyBlock(surveyBlockNew);
+        const surveyBlockNew = {
+            question: newQuestion,
+            answer: "",
+        };
+        const surveyDataNew = [...surveyData, surveyBlockNew];
+        setSurveyData(surveyDataNew);
     };
 
     return (
         <div>
-            <form onSubmit={onFormSubmit}>
-                <p>{surveyBlock.question}</p>
-                <input
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                />
-                <button>Submit</button>
-            </form>
-            <p>Answer:</p>
-            <p>{surveyBlock.answer}</p>
-        </div>
-    );
-};
-
-const Survey = () => {
-    return (
-        <div>
-            {data.map((x, id) => (
-                <SurveyBlock key={id} block={x} />
-            ))}
+            <div>
+                <form onSubmit={handleAddSurveyBlock}>
+                    <input
+                        value={newQuestion}
+                        onChange={(e) => setNewQuestion(e.target.value)}
+                    />
+                    <button>Add Question</button>
+                </form>
+            </div>
+            <br />
+            <br />
+            <div>
+                {surveyData.map((x, id) => (
+                    <SurveyBlock key={id} block={x} />
+                ))}
+            </div>
         </div>
     );
 };
