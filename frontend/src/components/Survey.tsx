@@ -1,22 +1,23 @@
 import { useState } from "react";
 
-// const data = [
-//     { id: 0, question: "What is your first name?", answer: "Default" },
-//     { id: 1, question: "What is your last name?", answer: "Default" },
-//     { id: 2, question: "How is your day today?", answer: "Default" },
-// ];
+const data = [
+    { question: "What is your first name?", answer: "Default" },
+    { question: "What is your last name?", answer: "Default" },
+    { question: "How is your day today?", answer: "Default" },
+];
 
-const Survey = () => {
-    const [answer, setAnswer] = useState("");
-    const [surveyBlock, setSurveyBlock] = useState({
-        question: "What is your name?",
-        ans: "",
-    });
+interface SurveyBlock {
+    block: { question: string; answer: string };
+}
+
+const SurveyBlock: React.FC<SurveyBlock> = ({ block }) => {
+    const [answer, setAnswer] = useState(block.answer);
+    const [surveyBlock, setSurveyBlock] = useState(block);
     console.log(surveyBlock);
 
     const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const surveyBlockNew = { ...surveyBlock, ans: answer };
+        const surveyBlockNew = { ...surveyBlock, answer: answer };
         setSurveyBlock(surveyBlockNew);
     };
 
@@ -31,7 +32,17 @@ const Survey = () => {
                 <button>Submit</button>
             </form>
             <p>Answer:</p>
-            <p>{surveyBlock.ans}</p>
+            <p>{surveyBlock.answer}</p>
+        </div>
+    );
+};
+
+const Survey = () => {
+    return (
+        <div>
+            {data.map((x, id) => (
+                <SurveyBlock key={id} block={x} />
+            ))}
         </div>
     );
 };
