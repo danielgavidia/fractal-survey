@@ -1,4 +1,5 @@
 import express from "express";
+import { getSurvey } from "../prisma_scripts/survey";
 
 // setup
 const app = express();
@@ -20,17 +21,15 @@ app.listen(port, () => {
 // -------
 
 // OBJECT: survey
-
 // data
 let data: { id: string; question: string; answer: string }[] = [];
 
 // get survey
 app.get("/survey/", (req, res) => {
-    res.json(data);
+    res.json(getSurvey());
 });
 
 // OBJECT: surveyBlock
-
 // Creates brand new survey block
 app.post("/surveyBlock", (req, res) => {
     const surveyBlock = req.body;
