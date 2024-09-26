@@ -56,9 +56,25 @@ const Survey = () => {
         }
     };
 
+    // update survey block
+    const handleSetUpdateQuestion = async (id: string, newQuestion: string) => {
+        try {
+            const surveyBlock = surveyData.find((x) => x.id === id);
+            await axios({
+                method: "put",
+                url: `${serverURL}/surveyData/${id}`,
+                data: {
+                    ...surveyBlock,
+                    question: newQuestion,
+                },
+            });
+        } catch (error) {
+            console.log(`Update error ${error}`);
+        }
+    };
+
     // delete survey block
     const handleSetDeleteBlock = (id: string): void => {
-        console.log(id);
         try {
             const surveyDataNew = surveyData.filter((x) => x.id !== id);
             setSurveyData(surveyDataNew);
@@ -86,6 +102,7 @@ const Survey = () => {
                     <SurveyBlock
                         key={id}
                         block={x}
+                        handleSetUpdateQuestion={handleSetUpdateQuestion}
                         handleSetDeleteBlock={handleSetDeleteBlock}
                     />
                 ))}

@@ -40,6 +40,21 @@ app.delete("/surveyData/:id", (req, res) => {
     console.log(data);
 });
 
+// update surveyBlock question
+app.put("/surveyData/:id", (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    console.log(body);
+    data = data.map((x) => {
+        if (x.id === id) {
+            return { ...x, ...body };
+        }
+        return x;
+    });
+    res.status(200).json({ message: "Data updated" });
+    console.log(data);
+});
+
 // port listen
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
