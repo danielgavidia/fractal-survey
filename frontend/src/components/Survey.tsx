@@ -4,29 +4,49 @@ import axios from "axios";
 
 const serverURL = "http://localhost:3000";
 
+interface iSurveyBlock {
+    question: string;
+    answer: string;
+}
+
 const Survey = () => {
     // state
-    const [surveyData, setSurveyData] = useState([]);
+    const [surveyData, setSurveyData] = useState<iSurveyBlock[]>([]);
     const [newQuestion, setNewQuestion] = useState<string>("");
 
     // useEffect
     useEffect(() => {
         const fetch = async () => {
-            const res = await axios.get(serverURL + "/surveyData");
-            setSurveyData(res.data);
+            const res = await axios.get(serverURL + "/surveyData/");
+            const data = res.data;
+            setSurveyData(data);
         };
         fetch();
     }, []);
 
+    console.log("Survey data");
+    console.log(surveyData);
+
     // add survey block
-    const handleAddSurveyBlock = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleAddSurveyBlock = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
+        e.preventDefault();
         const surveyBlockNew = {
             question: newQuestion,
-            answer: "",
+            answer: "Default",
         };
-        const surveyDataNew = [...surveyData, surveyBlockNew];
-        setSurveyData(surveyDataNew);
+        setSurveyData([...surveyData, surveyBlockNew]);
+        console.log(surveyBlockNew);
+        try {
+            const res = await axios.post(
+                serverURL + "/surveyData/",
+                surveyBlockNew
+            );
+            console.log(`res: ${res}`);
+        } catch (error) {
+            console.error("Error submitting form data:", error);
+        }
     };
 
     return (
