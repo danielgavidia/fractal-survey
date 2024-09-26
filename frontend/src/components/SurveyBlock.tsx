@@ -4,12 +4,14 @@ import { useState } from "react";
 interface SurveyBlock {
     block: { id: string; question: string; answer: string };
     handleSetUpdateQuestion: (id: string, newQuestion: string) => void;
+    handleSetPostAnswer: (id: string, answer: string) => void;
     handleSetDeleteBlock: (id: string) => void;
 }
 
 const SurveyBlock: React.FC<SurveyBlock> = ({
     block,
     handleSetUpdateQuestion,
+    handleSetPostAnswer,
     handleSetDeleteBlock,
 }) => {
     // state
@@ -36,6 +38,7 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
         event.preventDefault();
         const surveyBlockNew = { ...surveyBlock, answer: answer };
         setSurveyBlock(surveyBlockNew);
+        handleSetPostAnswer(block.id, answer);
     };
 
     return (

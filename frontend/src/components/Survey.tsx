@@ -56,7 +56,7 @@ const Survey = () => {
         }
     };
 
-    // update survey block
+    // update survey question
     const handleSetUpdateQuestion = async (id: string, newQuestion: string) => {
         try {
             const surveyBlock = surveyData.find((x) => x.id === id);
@@ -69,7 +69,24 @@ const Survey = () => {
                 },
             });
         } catch (error) {
-            console.log(`Update error ${error}`);
+            console.log(`Update error: ${error}`);
+        }
+    };
+
+    // submit survey answer
+    const handleSetPostAnswer = async (id: string, answer: string) => {
+        try {
+            const surveyBlock = surveyData.find((x) => x.id === id);
+            await axios({
+                method: "post",
+                url: `${serverURL}/surveyData/${id}`,
+                data: {
+                    ...surveyBlock,
+                    answer: answer,
+                },
+            });
+        } catch (error) {
+            console.log(`Post answer error: ${error}`);
         }
     };
 
@@ -103,6 +120,7 @@ const Survey = () => {
                         key={id}
                         block={x}
                         handleSetUpdateQuestion={handleSetUpdateQuestion}
+                        handleSetPostAnswer={handleSetPostAnswer}
                         handleSetDeleteBlock={handleSetDeleteBlock}
                     />
                 ))}

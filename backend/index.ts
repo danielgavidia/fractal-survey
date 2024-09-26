@@ -32,6 +32,20 @@ app.post("/surveyData", (req, res) => {
     }
 });
 
+// post surveyBlock answer
+app.post("/surveyData/:id", (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    data = data.map((x) => {
+        if (x.id === id) {
+            return { ...x, ...body };
+        }
+        return x;
+    });
+    res.status(200).json({ message: "Answer added" });
+    console.log(data);
+});
+
 // delete surveyData
 app.delete("/surveyData/:id", (req, res) => {
     const id = req.params.id;
