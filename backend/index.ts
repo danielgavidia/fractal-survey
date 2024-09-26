@@ -13,19 +13,15 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-// get surveyData
-// let data = [
-//     { question: "What is your first name?", answer: "Default" },
-//     { question: "What is your last name?", answer: "Default" },
-//     { question: "How is your day today?", answer: "Default" },
-// ];
-let data: { question: string; answer: string }[] = [];
+// data
+let data: { id: string; question: string; answer: string }[] = [];
 
+// get surveyData
 app.get("/surveyData/", (req, res) => {
     res.json(data);
 });
 
-// post surveyBlock
+// post surveyData
 app.post("/surveyData", (req, res) => {
     const surveyBlock = req.body;
     if (surveyBlock.question && surveyBlock.answer) {
@@ -34,6 +30,14 @@ app.post("/surveyData", (req, res) => {
     } else {
         res.status(400).json({ message: "Invalid data" });
     }
+});
+
+// delete surveyData
+app.delete("/surveyData/:id", (req, res) => {
+    const id = req.params.id;
+    data = data.filter((x) => x.id !== id);
+    res.status(200).json({ message: "Data deleted" });
+    console.log(data);
 });
 
 // port listen

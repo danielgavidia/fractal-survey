@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import SurveyBlock from "./SurveyBlock";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const serverURL = "http://localhost:3000";
 
+const generateUUID = (): string => {
+    return uuidv4();
+};
+
 interface iSurveyBlock {
+    id: string;
     question: string;
     answer: string;
 }
@@ -33,6 +39,7 @@ const Survey = () => {
     ) => {
         e.preventDefault();
         const surveyBlockNew = {
+            id: generateUUID(),
             question: newQuestion,
             answer: "Default",
         };
@@ -46,6 +53,18 @@ const Survey = () => {
             console.log(`res: ${res}`);
         } catch (error) {
             console.error("Error submitting form data:", error);
+        }
+    };
+
+    // delete survey block
+    const handleSetDeleteBlock = (id: string): void => {
+        console.log(id);
+        try {
+            const surveyDataNew = surveyData.filter((x) => x.id !== id);
+            setSurveyData(surveyDataNew);
+            axios.delete(serverURL + "/surveyData/" + id);
+        } catch (error) {
+            console.log(`Deletion error: ${error}`);
         }
     };
 
@@ -64,7 +83,11 @@ const Survey = () => {
             <br />
             <div>
                 {surveyData.map((x, id) => (
-                    <SurveyBlock key={id} block={x} />
+                    <SurveyBlock
+                        key={id}
+                        block={x}
+                        handleSetDeleteBlock={handleSetDeleteBlock}
+                    />
                 ))}
             </div>
         </div>
