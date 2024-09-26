@@ -38,7 +38,7 @@ app.post("/surveyData/:id", (req, res) => {
     const body = req.body;
     data = data.map((x) => {
         if (x.id === id) {
-            return { ...x, ...body };
+            return { ...x, answer: body.answer };
         }
         return x;
     });
@@ -61,7 +61,7 @@ app.put("/surveyData/:id", (req, res) => {
     console.log(body);
     data = data.map((x) => {
         if (x.id === id) {
-            return { ...x, ...body };
+            return { ...x, question: body.question };
         }
         return x;
     });
