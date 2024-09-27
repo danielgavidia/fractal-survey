@@ -19,40 +19,42 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
     const [surveyTitle, setSurveyTitle] = useState<string>("");
     const [newQuestion, setNewQuestion] = useState<string>("");
 
-    console.log(`surveyId Survey Component: ${surveyId}`);
+    // console.log(`surveyId Survey Component: ${surveyId}`);
 
     // useEffect
     useEffect(() => {
         const fetch = async () => {
-            const res = await axios({
-                method: "GET",
-                url: `${SERVER_URL}/surveys/${surveyId}`,
-            });
-            const data = res.data;
-            setSurveyTitle(data.title);
-            setSurveyBlocks(data.surveyBlocks);
+            getSurveyData();
         };
         fetch();
     }, []);
 
+    // get survey data
+    const getSurveyData = async () => {
+        const res = await axios({
+            method: "GET",
+            url: `${SERVER_URL}/surveys/${surveyId}`,
+        });
+        const data = res.data;
+        setSurveyTitle(data.title);
+        setSurveyBlocks(data.surveyBlocks);
+    };
+
     // add survey block
     const handleAddSurveyBlock = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const surveyBlockNew = {
-            id: generateUUID(),
-            surveyId: surveyId,
-            question: newQuestion,
-            answer: "Default",
-        };
-        setSurveyBlocks([...surveyBlocks, surveyBlockNew]);
-        console.log(surveyBlockNew);
         try {
-            const res = await axios({
-                method: "post",
+            e.preventDefault();
+            await axios({
+                method: "POST",
                 url: `${SERVER_URL}/surveyBlock/`,
-                data: surveyBlockNew,
+                data: {
+                    id: generateUUID(),
+                    surveyId: surveyId,
+                    question: newQuestion,
+                    answer: "Default",
+                },
             });
-            console.log(`res: ${res}`);
+            getSurveyData();
         } catch (error) {
             console.error("Error submitting form data:", error);
         }
@@ -61,8 +63,8 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
     // update survey question
     const handleSetUpdateQuestion = async (id: string, surveyId: string, newQuestion: string) => {
         try {
-            const res = await axios({
-                method: "put",
+            await axios({
+                method: "PUT",
                 url: `${SERVER_URL}/surveyBlock/question/`,
                 data: {
                     id: id,
@@ -70,7 +72,7 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
                     question: newQuestion,
                 },
             });
-            console.log(`res: ${res}`);
+            getSurveyData();
         } catch (error) {
             console.log(`Update error: ${error}`);
         }
@@ -79,9 +81,8 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
     // submit survey answer
     const handleSetPostAnswer = async (id: string, surveyId: string, answer: string) => {
         try {
-            // const surveyBlock = surveyData.find((x) => x.id === id);
-            const res = await axios({
-                method: "put",
+            await axios({
+                method: "PUT",
                 url: `${SERVER_URL}/surveyBlock/answer/`,
                 data: {
                     id: id,
@@ -89,7 +90,7 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
                     answer: answer,
                 },
             });
-            console.log(`res: ${res}`);
+            getSurveyData();
         } catch (error) {
             console.log(`Post answer error: ${error}`);
         }
@@ -98,16 +99,15 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
     // delete survey block
     const handleSetDeleteBlock = async (id: string, surveyId: string) => {
         try {
-            setSurveyBlocks((data) => data.filter((x) => x.id !== id));
-            const res = await axios({
-                method: "delete",
+            await axios({
+                method: "DELETE",
                 url: `${SERVER_URL}/surveyBlock/`,
                 data: {
                     id: id,
                     surveyId: surveyId,
                 },
             });
-            console.log(res);
+            getSurveyData();
         } catch (error) {
             console.log(`Deletion error: ${error}`);
         }
