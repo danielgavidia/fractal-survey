@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <RouteHome /> },
             { path: "RouteSurveys/", element: <RouteSurveys /> },
-            { path: "RouteSurveyCreate/", element: <RouteSurveyCreate /> },
+            { path: "RouteSurveyCreate/:surveyId", element: <RouteSurveyCreate /> },
             { path: "RouteSurveyResults/", element: <RouteSurveyResults /> },
         ],
     },

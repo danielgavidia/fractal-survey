@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 
 const navbarButtons = [
     { path: "/RouteSurveys", name: "Surveys" },
-    { path: "/RouteSurveyCreate", name: "Create Survey" },
     { path: "/RouteSurveyResults", name: "Survey Results" },
 ];
 
@@ -10,7 +9,9 @@ const Root = () => {
     return (
         <div>
             <nav>
-                <div>Fractal Survey App</div>
+                <div>
+                    <a href="/">Fractal Survey App</a>
+                </div>
                 <div>
                     {navbarButtons.map((x, id) => {
                         return (
