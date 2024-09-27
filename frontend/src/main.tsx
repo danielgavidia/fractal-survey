@@ -18,7 +18,7 @@ const router = createBrowserRouter([
             { path: "/", element: <RouteHome /> },
             { path: "RouteSurveys/", element: <RouteSurveys /> },
             { path: "RouteSurveyCreate/:surveyId", element: <RouteSurveyCreate /> },
-            { path: "RouteSurveyResults/", element: <RouteSurveyResults /> },
+            { path: "RouteSurveyResults/:surveyId", element: <RouteSurveyResults /> },
         ],
     },
 ]);
