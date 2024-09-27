@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../globals";
 
 interface Survey {
@@ -9,6 +10,7 @@ interface Survey {
 
 const RouteSurveys = () => {
     const [surveys, setSurveys] = useState<Survey[]>([]);
+    const navigate = useNavigate();
 
     // get survey data on refresh
     useEffect(() => {
@@ -28,17 +30,23 @@ const RouteSurveys = () => {
         const dataMapped = data.map((x: Survey) => ({ id: x.id, title: x.title }));
         setSurveys(dataMapped);
     };
+
+    // go to survey results
+    const navigateSurveyResults = (id: string) => {
+        navigate(`/RouteSurveyResults/${id}`);
+    };
+
     return (
         <div id="RouteSurveys">
             <div>Surveys</div>
             <div>
                 {surveys.map((x) => {
                     return (
-                        <div>
+                        <div key={x.id}>
                             <p>{x.title}</p>
                             <div>
                                 <button>Take</button>
-                                <button>Results</button>
+                                <button onClick={() => navigateSurveyResults(x.id)}>Results</button>
                             </div>
                         </div>
                     );
