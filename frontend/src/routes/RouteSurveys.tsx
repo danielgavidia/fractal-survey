@@ -31,6 +31,11 @@ const RouteSurveys = () => {
         setSurveys(dataMapped);
     };
 
+    // go to survey take
+    const navigateSurveyTake = (id: string) => {
+        navigate(`/RouteSurveyTake/${id}`);
+    };
+
     // go to survey results
     const navigateSurveyResults = (id: string) => {
         navigate(`/RouteSurveyResults/${id}`);
@@ -45,7 +50,7 @@ const RouteSurveys = () => {
                         <div key={x.id}>
                             <p>{x.title}</p>
                             <div>
-                                <button>Take</button>
+                                <button onClick={() => navigateSurveyTake(x.id)}>Take</button>
                                 <button onClick={() => navigateSurveyResults(x.id)}>Results</button>
                             </div>
                         </div>

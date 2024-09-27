@@ -9,9 +9,26 @@ async function main() {
             title: "Survey 01",
             surveyBlocks: {
                 create: [
-                    { question: "Question01", answer: "Answer01" },
-                    { question: "Question02", answer: "Answer02" },
-                    { question: "Question03", answer: "Answer03" },
+                    {
+                        question: "Question01",
+                        answers: {
+                            create: [
+                                { answer: "Answer01" },
+                                { answer: "Answer02" },
+                                { answer: "Answer03" },
+                            ],
+                        },
+                    },
+                    {
+                        question: "Question02",
+                        answers: {
+                            create: [
+                                { answer: "Answer01" },
+                                { answer: "Answer02" },
+                                { answer: "Answer03" },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -23,9 +40,26 @@ async function main() {
             title: "Survey 02",
             surveyBlocks: {
                 create: [
-                    { question: "Question01", answer: "Answer01" },
-                    { question: "Question02", answer: "Answer02" },
-                    { question: "Question03", answer: "Answer03" },
+                    {
+                        question: "Question01",
+                        answers: {
+                            create: [
+                                { answer: "Answer01" },
+                                { answer: "Answer02" },
+                                { answer: "Answer03" },
+                            ],
+                        },
+                    },
+                    {
+                        question: "Question02",
+                        answers: {
+                            create: [
+                                { answer: "Answer01" },
+                                { answer: "Answer02" },
+                                { answer: "Answer03" },
+                            ],
+                        },
+                    },
                 ],
             },
         },

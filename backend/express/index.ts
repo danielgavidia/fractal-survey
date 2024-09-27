@@ -44,7 +44,11 @@ app.get("/surveys/:id", async (req, res) => {
                 id: id,
             },
             include: {
-                surveyBlocks: true,
+                surveyBlocks: {
+                    include: {
+                        answers: true,
+                    },
+                },
             },
         });
         res.status(200).json(survey);
@@ -75,7 +79,6 @@ app.post("/surveyBlock/", async (req, res) => {
             data: {
                 surveyId: surveyId,
                 question: question,
-                answer: answer,
             },
         });
         res.status(200).json({ message: "SUCCESS" });
@@ -100,25 +103,6 @@ app.delete("/surveyBlock/", async (req, res) => {
     }
 });
 
-// Updates default survey block answer
-app.put("/surveyBlock/answer/", async (req, res) => {
-    try {
-        const { id, surveyId, answer } = req.body;
-        await prisma.surveyBlock.update({
-            where: {
-                id: id,
-                surveyId: surveyId,
-            },
-            data: {
-                answer: answer,
-            },
-        });
-        res.status(200).json({ message: "SUCCESS" });
-    } catch (error) {
-        res.status(400).json({ message: error });
-    }
-});
-
 // Updates survey block question
 app.put("/surveyBlock/question/", async (req, res) => {
     try {
@@ -131,6 +115,39 @@ app.put("/surveyBlock/question/", async (req, res) => {
             data: {
                 question: question,
             },
+        });
+        res.status(200).json({ message: "SUCCESS" });
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
+});
+
+// --
+// OBJECT: surveyBlockAnswer
+// Post survey block answer
+app.post("/surveyBlockAnswer/", async (req, res) => {
+    try {
+        const { id, surveyBlockId, answer } = req.body;
+        await prisma.surveyBlockAnswer.create({
+            data: {
+                id: id,
+                surveyBlockId: surveyBlockId,
+                answer: answer,
+            },
+        });
+        res.status(200).json({ message: "SUCCESS" });
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
+});
+
+// Post many answers
+app.post("/surveyBlockAnswer/many/", async (req, res) => {
+    try {
+        const { data } = req.body;
+        console.log(data);
+        await prisma.surveyBlockAnswer.createMany({
+            data: data,
         });
         res.status(200).json({ message: "SUCCESS" });
     } catch (error) {
