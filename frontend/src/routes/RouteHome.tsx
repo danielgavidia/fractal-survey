@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { generateUUID, SERVER_URL } from "../globals";
+import { SERVER_URL } from "../globals";
 
 const RouteHome = () => {
     const [surveyTitle, setSurveyTitle] = useState<string>("");
@@ -9,19 +9,19 @@ const RouteHome = () => {
 
     const handleCreateSurvey = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // prevent default
-        const generatedSurveyId = generateUUID(); // generate UUID
-        const req = { id: generatedSurveyId, title: surveyTitle };
-        await axios({
+        const req = { title: surveyTitle };
+        const res = await axios({
             // create new entry in Survey model
             method: "post",
             url: `${SERVER_URL}/surveys/`,
             data: req,
         });
         setSurveyTitle(""); // revert back survey title to ""
-        navigate(`/RouteSurveyCreate/${generatedSurveyId}`); // navigate to new survey route
+        navigate(`/RouteSurveyCreate/${res.data.survey.id}`); // navigate to new survey route
     };
+
     return (
-        <div id="RouteHome" className="p-4 bg-neutral h-screen">
+        <div id="RouteHome" className="p-4 h-screen">
             <div className="flex justify-center">
                 <form onSubmit={handleCreateSurvey} className="py-10 flex items-center w-full">
                     <div className="rounded flex-1">

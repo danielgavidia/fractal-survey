@@ -48,6 +48,9 @@ app.get("/surveys/:id", async (req, res) => {
                     include: {
                         answers: true,
                     },
+                    orderBy: {
+                        createdAt: "asc",
+                    },
                 },
             },
         });
@@ -61,10 +64,10 @@ app.get("/surveys/:id", async (req, res) => {
 app.post("/surveys/", async (req, res) => {
     try {
         const { id, title } = req.body;
-        await prisma.survey.create({
+        const survey = await prisma.survey.create({
             data: { id: id, title: title },
         });
-        res.status(200).json({ message: "SUCCESS" });
+        res.status(200).json({ survey: survey });
     } catch (error) {
         res.status(400).json({ message: error });
     }

@@ -55,15 +55,33 @@ const SurveyResults: React.FC<Survey> = ({ surveyId }) => {
             <div>
                 {surveyBlocks.map((x, id) => {
                     const answers = x.answers;
-                    const answersMapped = answers.map((x) => x.answer);
+                    const answersMapped = answers.map((x) => ({
+                        answer: x.answer,
+                        timestamp: x.createdAt,
+                    }));
                     return (
                         <div key={id} className="py-4 border-b-2 border-base-200">
                             <p className="font-bold">{x.question}</p>
                             <div>
                                 {answersMapped.map((answer, id) => {
+                                    const timestamp = answer.timestamp;
+                                    const timestampParsed = new Date(Date.parse(timestamp));
+                                    const dateFormatter = new Intl.DateTimeFormat("en-US", {
+                                        year: "2-digit",
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    });
+                                    const timestampFinal = dateFormatter.format(timestampParsed);
                                     return (
-                                        <div key={id} className="text-sm">
-                                            {answer}
+                                        <div className="items-center">
+                                            <div key={id} className="text-xs">
+                                                {answer.answer}
+                                            </div>
+                                            <div className="text-xs pr-2 text-base-300">
+                                                {timestampFinal}
+                                            </div>
                                         </div>
                                     );
                                 })}
