@@ -1,9 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const navbarButtons = [
-    { path: "/RouteSurveys", name: "Surveys" },
-    { path: "/RouteSurveyResults", name: "Survey Results" },
-];
+const navbarButtons = [{ path: "/RouteSurveys", name: "Surveys" }];
 
 const Root = () => {
     return (

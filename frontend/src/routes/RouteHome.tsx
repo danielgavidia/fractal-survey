@@ -22,7 +22,7 @@ const RouteHome = () => {
     };
     return (
         <div id="RouteHome">
-            <div>
+            <div className="bg-red-300">
                 <form onSubmit={handleCreateSurvey}>
                     <p>Create new survey</p>
                     <p>Survey Name: </p>
