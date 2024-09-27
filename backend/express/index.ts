@@ -48,6 +48,9 @@ app.get("/surveys/:id", async (req, res) => {
                     include: {
                         answers: true,
                     },
+                    orderBy: {
+                        createdAt: "asc",
+                    },
                 },
             },
         });
