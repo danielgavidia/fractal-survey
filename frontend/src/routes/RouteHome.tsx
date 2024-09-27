@@ -22,12 +22,21 @@ const RouteHome = () => {
     };
     return (
         <div id="RouteHome">
-            <div className="bg-red-300">
-                <form onSubmit={handleCreateSurvey}>
-                    <p>Create new survey</p>
-                    <p>Survey Name: </p>
-                    <input value={surveyTitle} onChange={(e) => setSurveyTitle(e.target.value)} />
-                    <button>Create</button>
+            <div className="p-2 flex justify-center">
+                <form onSubmit={handleCreateSurvey} className="py-10 flex">
+                    <div className="p-4 rounded">
+                        <input
+                            value={surveyTitle}
+                            onChange={(e) => setSurveyTitle(e.target.value)}
+                            placeholder="New survey title"
+                            className="h-10 p-2 rounded"
+                        />
+                    </div>
+                    <div className="p-4">
+                        <button className="h-10 bg-primary w-20 text-accent-content rounded">
+                            Create
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
