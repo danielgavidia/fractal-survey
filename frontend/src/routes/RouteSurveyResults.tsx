@@ -63,8 +63,8 @@ const SurveyResults: React.FC<Survey> = ({ surveyId }) => {
                         <div key={id}>
                             <p>Question: {x.question}</p>
                             <div>
-                                {answersMapped.map((y) => {
-                                    return <div>{y}</div>;
+                                {answersMapped.map((answer, id) => {
+                                    return <div key={id}>{answer}</div>;
                                 })}
                             </div>
                         </div>

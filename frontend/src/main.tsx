@@ -9,6 +9,7 @@ import RouteHome from "./routes/RouteHome.tsx";
 import RouteSurveyCreate from "./routes/RouteSurveyCreate.tsx";
 import RouteSurveyResults from "./routes/RouteSurveyResults.tsx";
 import RouteSurveys from "./routes/RouteSurveys.tsx";
+import RouteSurveyTake from "./routes/RouteSurveyTake.tsx";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
             { path: "RouteSurveys/", element: <RouteSurveys /> },
             { path: "RouteSurveyCreate/:surveyId", element: <RouteSurveyCreate /> },
             { path: "RouteSurveyResults/:surveyId", element: <RouteSurveyResults /> },
+            { path: "RouteSurveyTake/:surveyId", element: <RouteSurveyTake /> },
         ],
     },
 ]);
