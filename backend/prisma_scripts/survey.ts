@@ -2,6 +2,13 @@ import prisma from "../prisma/client";
 
 // Get survey
 export const getSurvey = async () => {
-    const survey = await prisma.survey.findMany();
+    const survey = await prisma.survey.findMany({
+        include: {
+            surveyBlocks: true,
+        },
+    });
+    console.log(survey);
     return survey;
 };
+
+await getSurvey();

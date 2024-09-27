@@ -14,6 +14,7 @@ model Survey {
     updatedAt DateTime @updatedAt
 
     // fields
+    title String @unique
 
     // relationships
     surveyBlocks SurveyBlock[]

@@ -1,15 +1,7 @@
 import prisma from "../prisma/client";
 
-// Creates brand new survey block
-export const postSurveyBlock = async (question: string, answer: string) => {
-    const surveyBlock = await prisma.surveyBlock.create({
-        data: {
-            question: question,
-            answer: answer,
-        },
-    });
-    console.log(surveyBlock);
-};
+// Retrieves all survey blocks
+// export const getSurveyBlocks = async ()
 
 // Deletes survey block
 export const deleteSurveyBlock = async (id: string) => {
