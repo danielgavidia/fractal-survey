@@ -5,7 +5,6 @@ interface SurveyBlock {
     surveyId: string;
     block: { id: string; question: string; answer: string };
     handleSetUpdateQuestion: (id: string, surveyId: string, newQuestion: string) => void;
-    // handleSetPostAnswer: (id: string, surveyId: string, answer: string) => void;
     handleSetDeleteBlock: (id: string, surveyId: string) => void;
 }
 
@@ -13,7 +12,6 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
     surveyId,
     block,
     handleSetUpdateQuestion,
-    // handleSetPostAnswer,
     handleSetDeleteBlock,
 }) => {
     // state
@@ -33,43 +31,39 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
         handleSetUpdateQuestion(block.id, surveyId, question);
     };
 
-    // answers
-    // const [answer, setAnswer] = useState(block.answer);
-    // const onFormSubmitAnswer = (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     const surveyBlockNew = { ...surveyBlock, answer: answer };
-    //     setSurveyBlock(surveyBlockNew);
-    //     handleSetPostAnswer(block.id, surveyId, answer);
-    // };
-
     return (
         <div>
-            {/* Edit questions */}
             {editQuestion ? (
-                <div>
-                    <form onSubmit={onFormSubmitQuestion}>
-                        <input value={question} onChange={(e) => setQuestion(e.target.value)} />
-                        <button type="submit">Done editing question</button>
+                <div className="border-b-2 border-base-200 py-2">
+                    <form onSubmit={onFormSubmitQuestion} className="flex items-center">
+                        <div className="flex-1">
+                            <input
+                                value={question}
+                                onChange={(e) => setQuestion(e.target.value)}
+                                className="w-full p-2 rounded outline-none bg-base-100 border-2 border-accent"
+                            />
+                        </div>
+                        <div className="btn ml-2 w-20 bg-accent">
+                            <button type="submit">Done</button>
+                        </div>
                     </form>
                 </div>
             ) : (
-                <div>
-                    <button onClick={() => handleSetEditQuestion()}>Edit Question</button>
-                    <p>Question: {surveyBlock.question}</p>
+                <div className="flex py-2 items-center border-b-2 border-base-200">
+                    <div className="flex-1">
+                        <p className="">{surveyBlock.question}</p>
+                    </div>
+                    <button onClick={() => handleSetEditQuestion()} className="btn ml-2 w-20">
+                        Edit
+                    </button>
+                    <button
+                        onClick={() => handleSetDeleteBlock(block.id, surveyId)}
+                        className="btn ml-2 w-20"
+                    >
+                        Delete
+                    </button>
                 </div>
             )}
-            {/* Regular form */}
-            {/* <form onSubmit={onFormSubmitAnswer}>
-                <input value={answer} onChange={(e) => setAnswer(e.target.value)} />
-                <button>Submit</button>
-            </form> */}
-            {/* Answer */}
-            {/* <p>Answer: {surveyBlock.answer}</p> */}
-            <button onClick={() => handleSetDeleteBlock(block.id, surveyId)}>Delete</button>
-            <br />
-            <br />
-            <br />
-            <br />
         </div>
     );
 };

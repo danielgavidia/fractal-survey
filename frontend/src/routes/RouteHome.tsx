@@ -21,19 +21,19 @@ const RouteHome = () => {
         navigate(`/RouteSurveyCreate/${generatedSurveyId}`); // navigate to new survey route
     };
     return (
-        <div id="RouteHome">
-            <div className="p-2 flex justify-center">
-                <form onSubmit={handleCreateSurvey} className="py-10 flex">
-                    <div className="p-4 rounded">
+        <div id="RouteHome" className="p-4 bg-neutral h-screen">
+            <div className="flex justify-center">
+                <form onSubmit={handleCreateSurvey} className="py-10 flex items-center w-full">
+                    <div className="rounded flex-1">
                         <input
                             value={surveyTitle}
                             onChange={(e) => setSurveyTitle(e.target.value)}
                             placeholder="New survey title"
-                            className="h-10 p-2 rounded"
+                            className="h-10 p-2 rounded outline-none w-full"
                         />
                     </div>
-                    <div className="p-4">
-                        <button className="h-10 bg-primary w-20 text-accent-content rounded">
+                    <div className="ml-4">
+                        <button className="h-10 btn bg-primary w-20 text-accent-content rounded border-none">
                             Create
                         </button>
                     </div>
