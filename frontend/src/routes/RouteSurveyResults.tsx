@@ -8,7 +8,16 @@ interface Survey {
 }
 
 interface SurveyBlock {
+    id: string;
     question: string;
+    answers: SurveyBlockAnswer[];
+}
+
+interface SurveyBlockAnswer {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    surveyBlockId: string;
     answer: string;
 }
 
@@ -33,8 +42,9 @@ const SurveyResults: React.FC<Survey> = ({ surveyId }) => {
         const data = res.data;
         const blocks = data.surveyBlocks;
         const blocksMapped = blocks.map((x: SurveyBlock) => ({
+            id: x.id,
             question: x.question,
-            answer: x.answer,
+            answers: x.answers,
         }));
         setSurveyTitle(data.title);
         setSurveyBlocks(blocksMapped);
@@ -47,7 +57,18 @@ const SurveyResults: React.FC<Survey> = ({ surveyId }) => {
             </div>
             <div>
                 {surveyBlocks.map((x, id) => {
-                    return <div key={id}>{x.question}</div>;
+                    const answers = x.answers;
+                    const answersMapped = answers.map((x) => x.answer);
+                    return (
+                        <div key={id}>
+                            <p>Question: {x.question}</p>
+                            <div>
+                                {answersMapped.map((y) => {
+                                    return <div>{y}</div>;
+                                })}
+                            </div>
+                        </div>
+                    );
                 })}
             </div>
         </div>

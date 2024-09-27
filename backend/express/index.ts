@@ -44,7 +44,11 @@ app.get("/surveys/:id", async (req, res) => {
                 id: id,
             },
             include: {
-                surveyBlocks: true,
+                surveyBlocks: {
+                    include: {
+                        answers: true,
+                    },
+                },
             },
         });
         res.status(200).json(survey);
