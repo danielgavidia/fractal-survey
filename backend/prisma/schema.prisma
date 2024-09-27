@@ -28,9 +28,23 @@ model SurveyBlock {
 
     // fields
     question String @default("Q")
-    answer   String @default("A")
 
     // relationships
-    Survey   Survey? @relation(fields: [surveyId], references: [id])
+    answers  SurveyBlockAnswer[]
+    Survey   Survey?             @relation(fields: [surveyId], references: [id])
     surveyId String?
+}
+
+model SurveyBlockAnswer {
+    // defaults
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // fields
+    answer String @default("A")
+
+    // relationships
+    SurveyBlock   SurveyBlock? @relation(fields: [surveyBlockId], references: [id])
+    surveyBlockId String?
 }

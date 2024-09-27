@@ -79,22 +79,22 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
     };
 
     // submit survey answer
-    const handleSetPostAnswer = async (id: string, surveyId: string, answer: string) => {
-        try {
-            await axios({
-                method: "PUT",
-                url: `${SERVER_URL}/surveyBlock/answer/`,
-                data: {
-                    id: id,
-                    surveyId: surveyId,
-                    answer: answer,
-                },
-            });
-            getSurveyData();
-        } catch (error) {
-            console.log(`Post answer error: ${error}`);
-        }
-    };
+    // const handleSetPostAnswer = async (id: string, surveyId: string, answer: string) => {
+    //     try {
+    //         await axios({
+    //             method: "PUT",
+    //             url: `${SERVER_URL}/surveyBlock/answer/`,
+    //             data: {
+    //                 id: id,
+    //                 surveyId: surveyId,
+    //                 answer: answer,
+    //             },
+    //         });
+    //         getSurveyData();
+    //     } catch (error) {
+    //         console.log(`Post answer error: ${error}`);
+    //     }
+    // };
 
     // delete survey block
     const handleSetDeleteBlock = async (id: string, surveyId: string) => {
@@ -132,7 +132,7 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
                         surveyId={surveyId}
                         block={x}
                         handleSetUpdateQuestion={handleSetUpdateQuestion}
-                        handleSetPostAnswer={handleSetPostAnswer}
+                        // handleSetPostAnswer={handleSetPostAnswer}
                         handleSetDeleteBlock={handleSetDeleteBlock}
                     />
                 ))}

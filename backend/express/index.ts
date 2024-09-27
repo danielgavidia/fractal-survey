@@ -75,7 +75,6 @@ app.post("/surveyBlock/", async (req, res) => {
             data: {
                 surveyId: surveyId,
                 question: question,
-                answer: answer,
             },
         });
         res.status(200).json({ message: "SUCCESS" });
@@ -100,25 +99,6 @@ app.delete("/surveyBlock/", async (req, res) => {
     }
 });
 
-// Updates default survey block answer
-app.put("/surveyBlock/answer/", async (req, res) => {
-    try {
-        const { id, surveyId, answer } = req.body;
-        await prisma.surveyBlock.update({
-            where: {
-                id: id,
-                surveyId: surveyId,
-            },
-            data: {
-                answer: answer,
-            },
-        });
-        res.status(200).json({ message: "SUCCESS" });
-    } catch (error) {
-        res.status(400).json({ message: error });
-    }
-});
-
 // Updates survey block question
 app.put("/surveyBlock/question/", async (req, res) => {
     try {
@@ -130,6 +110,25 @@ app.put("/surveyBlock/question/", async (req, res) => {
             },
             data: {
                 question: question,
+            },
+        });
+        res.status(200).json({ message: "SUCCESS" });
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
+});
+
+// --
+// OBJECT: surveyBlockAnswer
+// Post survey block answer
+app.post("/surveyBlockAnswer/", async (req, res) => {
+    try {
+        const { id, surveyBlockId, answer } = req.body;
+        await prisma.surveyBlockAnswer.create({
+            data: {
+                id: id,
+                surveyBlockId: surveyBlockId,
+                answer: answer,
             },
         });
         res.status(200).json({ message: "SUCCESS" });

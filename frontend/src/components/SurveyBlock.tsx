@@ -5,7 +5,7 @@ interface SurveyBlock {
     surveyId: string;
     block: { id: string; question: string; answer: string };
     handleSetUpdateQuestion: (id: string, surveyId: string, newQuestion: string) => void;
-    handleSetPostAnswer: (id: string, surveyId: string, answer: string) => void;
+    // handleSetPostAnswer: (id: string, surveyId: string, answer: string) => void;
     handleSetDeleteBlock: (id: string, surveyId: string) => void;
 }
 
@@ -13,7 +13,7 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
     surveyId,
     block,
     handleSetUpdateQuestion,
-    handleSetPostAnswer,
+    // handleSetPostAnswer,
     handleSetDeleteBlock,
 }) => {
     // state
@@ -34,13 +34,13 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
     };
 
     // answers
-    const [answer, setAnswer] = useState(block.answer);
-    const onFormSubmitAnswer = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const surveyBlockNew = { ...surveyBlock, answer: answer };
-        setSurveyBlock(surveyBlockNew);
-        handleSetPostAnswer(block.id, surveyId, answer);
-    };
+    // const [answer, setAnswer] = useState(block.answer);
+    // const onFormSubmitAnswer = (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     const surveyBlockNew = { ...surveyBlock, answer: answer };
+    //     setSurveyBlock(surveyBlockNew);
+    //     handleSetPostAnswer(block.id, surveyId, answer);
+    // };
 
     return (
         <div>
@@ -55,16 +55,16 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
             ) : (
                 <div>
                     <button onClick={() => handleSetEditQuestion()}>Edit Question</button>
-                    <p>{surveyBlock.question}</p>
+                    <p>Question: {surveyBlock.question}</p>
                 </div>
             )}
             {/* Regular form */}
-            <form onSubmit={onFormSubmitAnswer}>
+            {/* <form onSubmit={onFormSubmitAnswer}>
                 <input value={answer} onChange={(e) => setAnswer(e.target.value)} />
                 <button>Submit</button>
-            </form>
+            </form> */}
             {/* Answer */}
-            <p>Answer: {surveyBlock.answer}</p>
+            {/* <p>Answer: {surveyBlock.answer}</p> */}
             <button onClick={() => handleSetDeleteBlock(block.id, surveyId)}>Delete</button>
             <br />
             <br />
