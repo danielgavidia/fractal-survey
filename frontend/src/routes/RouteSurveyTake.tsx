@@ -64,7 +64,7 @@ const SurveyTake: React.FC<SurveyTake> = ({ surveyId }) => {
                 url: `${SERVER_URL}/surveyBlockAnswer/many/`,
                 data: { data: dataMapped },
             });
-            navigate("/RouteSurveys");
+            navigate(`/RouteSurveyResults/${survey?.id}`);
         } catch (error) {
             console.error("ERROR: ", error);
         }

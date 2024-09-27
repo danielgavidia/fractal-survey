@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { generateUUID, SERVER_URL } from "../globals";
+import { SERVER_URL } from "../globals";
 
 const RouteHome = () => {
     const [surveyTitle, setSurveyTitle] = useState<string>("");
@@ -21,7 +21,7 @@ const RouteHome = () => {
     };
 
     return (
-        <div id="RouteHome" className="p-4 bg-neutral h-screen">
+        <div id="RouteHome" className="p-4 h-screen">
             <div className="flex justify-center">
                 <form onSubmit={handleCreateSurvey} className="py-10 flex items-center w-full">
                     <div className="rounded flex-1">
