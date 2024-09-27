@@ -14,10 +14,7 @@ const RouteSurveys = () => {
 
     // get survey data on refresh
     useEffect(() => {
-        const fetch = async () => {
-            getSurveyData();
-        };
-        fetch();
+        getSurveyData();
     }, []);
 
     // get survey data
@@ -29,16 +26,6 @@ const RouteSurveys = () => {
         const data = res.data;
         const dataMapped = data.map((x: Survey) => ({ id: x.id, title: x.title }));
         setSurveys(dataMapped);
-    };
-
-    // go to survey take
-    const navigateSurveyTake = (id: string) => {
-        navigate(`/RouteSurveyTake/${id}`);
-    };
-
-    // go to survey results
-    const navigateSurveyResults = (id: string) => {
-        navigate(`/RouteSurveyResults/${id}`);
     };
 
     return (
@@ -55,7 +42,7 @@ const RouteSurveys = () => {
                             </div>
                             <div className="p-2">
                                 <button
-                                    onClick={() => navigateSurveyTake(x.id)}
+                                    onClick={() => navigate(`/RouteSurveyTake/${x.id}`)}
                                     className="bg-primary btn p-2 w-20 border-none"
                                 >
                                     Take
@@ -63,7 +50,7 @@ const RouteSurveys = () => {
                             </div>
                             <div className="p-2">
                                 <button
-                                    onClick={() => navigateSurveyResults(x.id)}
+                                    onClick={() => navigate(`/RouteSurveyResults/${x.id}`)}
                                     className="bg-primary btn p-2 w-20 border-none"
                                 >
                                     Results

@@ -9,17 +9,17 @@ const RouteHome = () => {
 
     const handleCreateSurvey = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // prevent default
-        const generatedSurveyId = generateUUID(); // generate UUID
-        const req = { id: generatedSurveyId, title: surveyTitle };
-        await axios({
+        const req = { title: surveyTitle };
+        const res = await axios({
             // create new entry in Survey model
             method: "post",
             url: `${SERVER_URL}/surveys/`,
             data: req,
         });
         setSurveyTitle(""); // revert back survey title to ""
-        navigate(`/RouteSurveyCreate/${generatedSurveyId}`); // navigate to new survey route
+        navigate(`/RouteSurveyCreate/${res.data.survey.id}`); // navigate to new survey route
     };
+
     return (
         <div id="RouteHome" className="p-4 bg-neutral h-screen">
             <div className="flex justify-center">

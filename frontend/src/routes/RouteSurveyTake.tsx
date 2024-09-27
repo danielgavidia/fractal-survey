@@ -13,19 +13,24 @@ interface SurveyBlock {
     question: string;
 }
 
+interface Survey {
+    id: string;
+    title: string;
+    surveyBlocks: SurveyBlock[];
+}
+
 const SurveyTake: React.FC<SurveyTake> = ({ surveyId }) => {
-    const [surveyBlocks, setSurveyBlocks] = useState<SurveyBlock[]>([]);
-    const [title, setTitle] = useState<string>("");
+    const [survey, setSurvey] = useState<Survey | null>(null);
+    const loading = !survey;
+    const title = survey?.title;
+    const surveyBlocks = survey?.surveyBlocks;
     // establishes that answers will have multiple keys of the same type
     const [answers, setAnswers] = useState<{ [blockId: string]: string }>({});
     const navigate = useNavigate();
 
     // load survey blocks
     useEffect(() => {
-        const fetch = async () => {
-            getSurveyData();
-        };
-        fetch();
+        getSurveyData();
     }, []);
 
     // get survey data
@@ -35,10 +40,7 @@ const SurveyTake: React.FC<SurveyTake> = ({ surveyId }) => {
             url: `${SERVER_URL}/surveys/${surveyId}`,
         });
         const data = res.data;
-        const blocks = data.surveyBlocks;
-        const blocksMapped = blocks.map((x: SurveyBlock) => ({ id: x.id, question: x.question }));
-        setTitle(data.title);
-        setSurveyBlocks(blocksMapped);
+        setSurvey(data);
     };
 
     // on change
@@ -68,12 +70,14 @@ const SurveyTake: React.FC<SurveyTake> = ({ surveyId }) => {
         }
     };
 
+    if (loading) return <div>loading</div>;
+
     return (
         <div>
             <div className="py-4 text-md text-center text-primary-content font-bold">{title}</div>
             <div className="">
                 <form onSubmit={handleSubmit}>
-                    {surveyBlocks.map((block) => {
+                    {surveyBlocks?.map((block) => {
                         return (
                             <div key={block.id} className="py-4 w-full">
                                 <p className="p-1 text-sm text-primary-content">{block.question}</p>

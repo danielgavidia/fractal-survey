@@ -4,12 +4,14 @@ import { useParams } from "react-router-dom";
 const RouteSurveyCreate = () => {
     const { surveyId } = useParams<{ surveyId: string }>();
     console.log(`surveyId RootSurveyCreate: ${surveyId}`);
+
+    if (surveyId == undefined) return <div>error: surveyId is undefined</div>;
     return (
         <div id="RouteSurveyCreate" className="p-4">
             <div>
                 <p>Create</p>
             </div>
-            <Survey surveyId={surveyId as string} />
+            <Survey surveyId={surveyId} />
         </div>
     );
 };
