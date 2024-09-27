@@ -67,14 +67,16 @@ app.delete("/surveyBlock", async (req, res) => {
 });
 
 // Updates default survey block answer
-app.post("/surveyBlock/:id", (req, res) => {
-    const id = req.params.id;
+app.put("/surveyBlockAnswer/", async (req, res) => {
     const body = req.body;
-    data = data.map((x) => {
-        if (x.id === id) {
-            return { ...x, answer: body.answer };
-        }
-        return x;
+    await prisma.surveyBlock.update({
+        where: {
+            id: body.id,
+            surveyId: body.surveyId,
+        },
+        data: {
+            answer: body.answer,
+        },
     });
     res.status(200).json({ message: "Answer added" });
     console.log(data);

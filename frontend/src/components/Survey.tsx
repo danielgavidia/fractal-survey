@@ -81,13 +81,15 @@ const Survey = () => {
     };
 
     // submit survey answer
-    const handleSetPostAnswer = async (id: string, answer: string) => {
+    const handleSetPostAnswer = async (id: string, surveyId: string, answer: string) => {
         try {
             // const surveyBlock = surveyData.find((x) => x.id === id);
             const res = await axios({
-                method: "post",
-                url: `${serverURL}/surveyBlock/${id}`,
+                method: "put",
+                url: `${serverURL}/surveyBlockAnswer/`,
                 data: {
+                    id: id,
+                    surveyId: surveyId,
                     answer: answer,
                 },
             });

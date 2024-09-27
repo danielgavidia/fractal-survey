@@ -5,7 +5,7 @@ interface SurveyBlock {
     surveyId: string;
     block: { id: string; question: string; answer: string };
     handleSetUpdateQuestion: (id: string, surveyId: string, newQuestion: string) => void;
-    handleSetPostAnswer: (id: string, answer: string) => void;
+    handleSetPostAnswer: (id: string, surveyId: string, answer: string) => void;
     handleSetDeleteBlock: (id: string, surveyId: string) => void;
 }
 
@@ -39,7 +39,7 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
         event.preventDefault();
         const surveyBlockNew = { ...surveyBlock, answer: answer };
         setSurveyBlock(surveyBlockNew);
-        handleSetPostAnswer(block.id, answer);
+        handleSetPostAnswer(block.id, surveyId, answer);
     };
 
     return (
