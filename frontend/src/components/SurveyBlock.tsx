@@ -4,7 +4,7 @@ import { useState } from "react";
 interface SurveyBlock {
     surveyId: string;
     block: { id: string; question: string; answer: string };
-    handleSetUpdateQuestion: (id: string, newQuestion: string) => void;
+    handleSetUpdateQuestion: (id: string, surveyId: string, newQuestion: string) => void;
     handleSetPostAnswer: (id: string, answer: string) => void;
     handleSetDeleteBlock: (id: string, surveyId: string) => void;
 }
@@ -30,7 +30,7 @@ const SurveyBlock: React.FC<SurveyBlock> = ({
         const surveyBlockNew = { ...surveyBlock, question: question };
         setSurveyBlock(surveyBlockNew);
         handleSetEditQuestion();
-        handleSetUpdateQuestion(block.id, question);
+        handleSetUpdateQuestion(block.id, surveyId, question);
     };
 
     // answers

@@ -1,5 +1,4 @@
 import express from "express";
-import { getSurvey } from "../prisma_scripts/survey";
 import prisma from "../prisma/client";
 
 // setup
@@ -27,7 +26,11 @@ let data: { id: string; question: string; answer: string }[] = [];
 
 // get all surveys
 app.get("/surveys/", async (req, res) => {
-    const surveys = await getSurvey();
+    const surveys = await prisma.survey.findMany({
+        include: {
+            surveyBlocks: true,
+        },
+    });
     console.log(surveys);
     res.json(surveys);
 });
@@ -78,15 +81,16 @@ app.post("/surveyBlock/:id", (req, res) => {
 });
 
 // Updates survey block question
-app.put("/surveyBlock/:id", (req, res) => {
-    const id = req.params.id;
+app.put("/surveyBlock/", async (req, res) => {
     const body = req.body;
-    console.log(body);
-    data = data.map((x) => {
-        if (x.id === id) {
-            return { ...x, question: body.question };
-        }
-        return x;
+    await prisma.surveyBlock.update({
+        where: {
+            id: body.id,
+            surveyId: body.surveyId,
+        },
+        data: {
+            question: body.question,
+        },
     });
     res.status(200).json({ message: "Data updated" });
     console.log(data);

@@ -63,12 +63,14 @@ const Survey = () => {
     };
 
     // update survey question
-    const handleSetUpdateQuestion = async (id: string, newQuestion: string) => {
+    const handleSetUpdateQuestion = async (id: string, surveyId: string, newQuestion: string) => {
         try {
             const res = await axios({
                 method: "put",
-                url: `${serverURL}/surveyData/${id}`,
+                url: `${serverURL}/surveyBlock/`,
                 data: {
+                    id: id,
+                    surveyId: surveyId,
                     question: newQuestion,
                 },
             });
@@ -84,7 +86,7 @@ const Survey = () => {
             // const surveyBlock = surveyData.find((x) => x.id === id);
             const res = await axios({
                 method: "post",
-                url: `${serverURL}/surveyData/${id}`,
+                url: `${serverURL}/surveyBlock/${id}`,
                 data: {
                     answer: answer,
                 },
