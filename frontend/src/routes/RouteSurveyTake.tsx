@@ -3,10 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { SERVER_URL } from "../globals";
 
-// step 1: use axios to pull Survey object
-// step 2: map through Survey object and show all questions, with answer fields
-// step 3: build logic for posting answers to DB
-
 interface SurveyTake {
     surveyId: string;
 }
@@ -18,6 +14,9 @@ interface SurveyBlock {
 
 const SurveyTake: React.FC<SurveyTake> = ({ surveyId }) => {
     const [surveyBlocks, setSurveyBlocks] = useState<SurveyBlock[]>([]);
+    // establishes that answers will have multiple keys of the same type
+    const [answers, setAnswers] = useState<{ [blockId: string]: string }>({});
+    console.log(answers);
 
     // load survey blocks
     useEffect(() => {
@@ -39,14 +38,50 @@ const SurveyTake: React.FC<SurveyTake> = ({ surveyId }) => {
         setSurveyBlocks(blocksMapped);
     };
 
+    // on change
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, blockId: string) => {
+        const { value } = e.target;
+        setAnswers((prevAnswers) => ({
+            ...prevAnswers,
+            [blockId]: value,
+        }));
+    };
+
+    // submit form
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            const data = Object.entries(answers);
+            const dataMapped = data.map((x) => ({ surveyBlockId: x[0], answer: x[1] }));
+            console.log(dataMapped);
+            await axios({
+                method: "POST",
+                url: `${SERVER_URL}/surveyBlockAnswer/many/`,
+                data: { data: dataMapped },
+            });
+        } catch (error) {
+            console.error("ERROR: ", error);
+        }
+    };
+
     return (
         <div>
             <div>{surveyId}</div>
-            <div>
-                {surveyBlocks.map((x) => {
-                    return <div key={x.id}>{x.question}</div>;
+            <form onSubmit={handleSubmit}>
+                {surveyBlocks.map((block) => {
+                    return (
+                        <div key={block.id}>
+                            <p>{block.question}</p>
+                            <input
+                                type="text"
+                                value={answers[block.id] || ""}
+                                onChange={(e) => handleInputChange(e, block.id)}
+                            />
+                        </div>
+                    );
                 })}
-            </div>
+                <button>Submit</button>
+            </form>
         </div>
     );
 };

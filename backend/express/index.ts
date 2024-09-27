@@ -140,3 +140,17 @@ app.post("/surveyBlockAnswer/", async (req, res) => {
         res.status(400).json({ message: error });
     }
 });
+
+// Post many answers
+app.post("/surveyBlockAnswer/many/", async (req, res) => {
+    try {
+        const { data } = req.body;
+        console.log(data);
+        await prisma.surveyBlockAnswer.createMany({
+            data: data,
+        });
+        res.status(200).json({ message: "SUCCESS" });
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
+});
