@@ -51,20 +51,21 @@ const SurveyResults: React.FC<Survey> = ({ surveyId }) => {
     };
     return (
         <div>
-            <div>
-                <h1>{surveyTitle}</h1>
-                <h2>{surveyId}</h2>
-            </div>
+            <div className="text-lg py-2 text-center font-bold">{surveyTitle}</div>
             <div>
                 {surveyBlocks.map((x, id) => {
                     const answers = x.answers;
                     const answersMapped = answers.map((x) => x.answer);
                     return (
-                        <div key={id}>
-                            <p>Question: {x.question}</p>
+                        <div key={id} className="py-4 border-b-2 border-base-200">
+                            <p className="font-bold">{x.question}</p>
                             <div>
                                 {answersMapped.map((answer, id) => {
-                                    return <div key={id}>{answer}</div>;
+                                    return (
+                                        <div key={id} className="text-sm">
+                                            {answer}
+                                        </div>
+                                    );
                                 })}
                             </div>
                         </div>
@@ -79,7 +80,7 @@ const RouteSurveyResults = () => {
     const { surveyId } = useParams<{ surveyId: string }>();
 
     return (
-        <div id="RouteSurveyResults">
+        <div id="RouteSurveyResults" className="p-4">
             <SurveyResults surveyId={surveyId as string} />
         </div>
     );

@@ -1,27 +1,19 @@
 import { Outlet } from "react-router-dom";
 
-const navbarButtons = [
-    { path: "/RouteSurveys", name: "Surveys" },
-    { path: "/RouteSurveyResults", name: "Survey Results" },
-];
-
 const Root = () => {
     return (
         <div>
-            <nav>
-                <div>
-                    <a href="/">Fractal Survey App</a>
-                </div>
-                <div>
-                    {navbarButtons.map((x, id) => {
-                        return (
-                            <div key={id}>
-                                <a href={x.path}>{x.name}</a>
-                            </div>
-                        );
-                    })}
-                </div>
-            </nav>
+            <div className="navbar bg-primary-content p-4">
+                <a href="/" className="flex-1 font-extrabold text-lg text-neutral-content">
+                    Fractal Survey App
+                </a>
+                <a
+                    href="/RouteSurveys"
+                    className="flex-none btn bg-primary-content text-base-100 w-20"
+                >
+                    Surveys
+                </a>
+            </div>
             <Outlet />
         </div>
     );

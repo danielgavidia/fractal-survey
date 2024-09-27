@@ -19,8 +19,6 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
     const [surveyTitle, setSurveyTitle] = useState<string>("");
     const [newQuestion, setNewQuestion] = useState<string>("");
 
-    // console.log(`surveyId Survey Component: ${surveyId}`);
-
     // useEffect
     useEffect(() => {
         const fetch = async () => {
@@ -78,24 +76,6 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
         }
     };
 
-    // submit survey answer
-    // const handleSetPostAnswer = async (id: string, surveyId: string, answer: string) => {
-    //     try {
-    //         await axios({
-    //             method: "PUT",
-    //             url: `${SERVER_URL}/surveyBlock/answer/`,
-    //             data: {
-    //                 id: id,
-    //                 surveyId: surveyId,
-    //                 answer: answer,
-    //             },
-    //         });
-    //         getSurveyData();
-    //     } catch (error) {
-    //         console.log(`Post answer error: ${error}`);
-    //     }
-    // };
-
     // delete survey block
     const handleSetDeleteBlock = async (id: string, surveyId: string) => {
         try {
@@ -115,16 +95,22 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
 
     return (
         <div>
-            <h1>Survey Title: {surveyTitle}</h1>
-            <h2>Survey ID: {surveyId}</h2>
-            <div>
-                <form onSubmit={handleAddSurveyBlock}>
-                    <input value={newQuestion} onChange={(e) => setNewQuestion(e.target.value)} />
-                    <button>Add Question</button>
+            <div className="text-center font-bold">{surveyTitle}</div>
+            <div className="py-4">
+                <form onSubmit={handleAddSurveyBlock} className="flex items-center">
+                    <div className="flex-1 pr-2">
+                        <input
+                            value={newQuestion}
+                            onChange={(e) => setNewQuestion(e.target.value)}
+                            placeholder="Question"
+                            className="w-full p-2 rounded outline-none"
+                        />
+                    </div>
+                    <div>
+                        <button className="btn bg-primary w-20">Add</button>
+                    </div>
                 </form>
             </div>
-            <br />
-            <br />
             <div>
                 {surveyBlocks.map((x) => (
                     <SurveyBlock
@@ -132,7 +118,6 @@ const Survey: React.FC<iSurvey> = ({ surveyId }) => {
                         surveyId={surveyId}
                         block={x}
                         handleSetUpdateQuestion={handleSetUpdateQuestion}
-                        // handleSetPostAnswer={handleSetPostAnswer}
                         handleSetDeleteBlock={handleSetDeleteBlock}
                     />
                 ))}
