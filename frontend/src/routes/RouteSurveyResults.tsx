@@ -75,10 +75,8 @@ const SurveyResults: React.FC<Survey> = ({ surveyId }) => {
                                     });
                                     const timestampFinal = dateFormatter.format(timestampParsed);
                                     return (
-                                        <div className="items-center">
-                                            <div key={id} className="text-xs">
-                                                {answer.answer}
-                                            </div>
+                                        <div className="items-center" key={id}>
+                                            <div className="text-xs">{answer.answer}</div>
                                             <div className="text-xs pr-2 text-base-300">
                                                 {timestampFinal}
                                             </div>
